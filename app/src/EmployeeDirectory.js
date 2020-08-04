@@ -1,4 +1,5 @@
 import React from 'react';
+import EmployeeLine from "./EmployeeLine"
 
 class EmployeeDirectory extends React.Component {
 	render() {
@@ -12,6 +13,12 @@ class EmployeeDirectory extends React.Component {
 			<div className="col s2">Phone</div>
 			<div className="col s4">Email</div>
 			<div className="col s2">DOB</div>
+
+			<EmployeeLine name = "bob" cell = "303-777-1832" email = "bob@google.com" dob = "5-22-1977" picture = "nothing.jpg" />
+			<EmployeeLine name = "bob" cell = "303-777-1832" email = "bob@google.com" dob = "5-22-1977" picture = "nothing.jpg" />
+			<EmployeeLine name = "bob" cell = "303-777-1832" email = "bob@google.com" dob = "5-22-1977" picture = "nothing.jpg" />
+			<EmployeeLine name = "bob" cell = "303-777-1832" email = "bob@google.com" dob = "5-22-1977" picture = "nothing.jpg" />
+			<EmployeeLine name = "bob" cell = "303-777-1832" email = "bob@google.com" dob = "5-22-1977" picture = "nothing.jpg" />
 
 
 		</div>
