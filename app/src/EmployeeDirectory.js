@@ -5,18 +5,27 @@ class EmployeeDirectory extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			search: "",
 			error: null,
 			isLoaded: false,
-			items: [],
-			filteredItems: [{}]
+			items: []
 		};
+		this.employeeMatchesSearch = (employee) => {
+			let search = this.state.search.toLowerCase();
+
+			return search === ""
+				|| (employee.name.toLowerCase().includes(search))
+				|| (employee.email.toLowerCase().includes(search))
+				|| (employee.dob.toLowerCase().includes(search))
+				|| (employee.cell.toLowerCase().includes(search))
+		}
 	}
 
 	
 	
 	async componentDidMount() {
 		try {
-			let res = await fetch("https://randomuser.me/api/?results=100")
+			let res = await fetch("https://randomuser.me/api/?results=100&nat=us")
 			let result = await res.json();
 			let employees = result.results.map(it => {
 				return {
@@ -31,7 +40,6 @@ class EmployeeDirectory extends React.Component {
 			this.setState({
 				isLoaded: true,
 				items: employees,
-				filteredItems: employees
 			})
 		} catch (error){
 			this.setState({
@@ -44,13 +52,7 @@ class EmployeeDirectory extends React.Component {
 	handleSearch = event => {
 		// console.log(event.target.value)
 		const filter = event.target.value
-		const filteredList = this.state.items.filter(item => {
-			let values = Object.values(item)
-			.join("")
-			.toLowerCase();
-			return values.indexOf(filter.toLowerCase())!==-1
-		})
-		this.setState({filteredItems: filteredList})
+		this.setState({search: filter})
 	}
 	
 	
@@ -65,7 +67,7 @@ class EmployeeDirectory extends React.Component {
 		
 		return  <div className="row">
 		<div className="col s12 center">
-		<input id = "searchField" onChange = {event => this.handleSearch(event)}></input>
+		<input id = "searchField" onChange = {this.handleSearch}></input>
 		</div>
 		
 		<div className="col s1">Image</div>
@@ -76,7 +78,9 @@ class EmployeeDirectory extends React.Component {
 
 		<div className="col s12 white-text"><h5>spacer</h5></div>
 		
-		{this.state.filteredItems.map(item => (
+		{items
+			.filter(this.employeeMatchesSearch)
+			.map(item => (
 			<EmployeeLine picture = {item.picture}
 									name={item.name}
 									cell={item.cell}
