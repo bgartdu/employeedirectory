@@ -7,9 +7,12 @@ class EmployeeDirectory extends React.Component {
 		this.state = {
 			error: null,
 			isLoaded: false,
-			items: []
+			items: [],
+			filteredItems: [{}]
 		};
 	}
+
+	
 	
 	async componentDidMount() {
 		try {
@@ -28,6 +31,7 @@ class EmployeeDirectory extends React.Component {
 			this.setState({
 				isLoaded: true,
 				items: employees,
+				filteredItems: employees
 			})
 		} catch (error){
 			this.setState({
@@ -35,6 +39,18 @@ class EmployeeDirectory extends React.Component {
 				error,
 			})
 		}
+	}
+
+	handleSearch = event => {
+		// console.log(event.target.value)
+		const filter = event.target.value
+		const filteredList = this.state.items.filter(item => {
+			let values = Object.values(item)
+			.join("")
+			.toLowerCase();
+			return values.indexOf(filter.toLowerCase())!==-1
+		})
+		this.setState({filteredItems: filteredList})
 	}
 	
 	
@@ -49,7 +65,7 @@ class EmployeeDirectory extends React.Component {
 		
 		return  <div className="row">
 		<div className="col s12 center">
-		<input id = "searchField"></input>
+		<input id = "searchField" onChange = {event => this.handleSearch(event)}></input>
 		</div>
 		
 		<div className="col s1">Image</div>
@@ -60,7 +76,7 @@ class EmployeeDirectory extends React.Component {
 
 		<div className="col s12 white-text"><h5>spacer</h5></div>
 		
-		{items.map(item => (
+		{this.state.filteredItems.map(item => (
 			<EmployeeLine picture = {item.picture}
 									name={item.name}
 									cell={item.cell}
