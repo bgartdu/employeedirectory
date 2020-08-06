@@ -66,30 +66,33 @@ class EmployeeDirectory extends React.Component {
 		}
 		
 		return  <div className="row">
-		<div className="col s12 center">
-		<input id = "searchField" onChange = {this.handleSearch}></input>
-		</div>
-		
-		<div className="col s1">Image</div>
-		<div className="col s3">Name</div>
-		<div className="col s2">Phone</div>
-		<div className="col s4">Email</div>
-		<div className="col s2">DOB</div>
+			<div className="col s4 white white-text">.</div>
+			<div className="col s4 center">
+				<input id = "searchField" onChange = {this.handleSearch}></input>
+			</div>
+			<div className="col s4 white white-text">.</div>
+			<div className="col s12 white white-text">.</div>
+			
+			<div className="col s1">Image</div>
+			<div className="col s3">Name</div>
+			<div className="col s2">Phone</div>
+			<div className="col s4">Email</div>
+			<div className="col s2">DOB</div>
 
-		<div className="col s12 white-text"><h5>spacer</h5></div>
-		
-		{items
-			.filter(this.employeeMatchesSearch)
-			.map(item => (
-			<EmployeeLine picture = {item.picture}
-									name={item.name}
-									cell={item.cell}
-									email={item.email}
-									dob={item.dob}/>
+			<div className="col s12 white-text"><h5>spacer</h5></div>
+			
+			{items
+				.filter(this.employeeMatchesSearch)
+				.map(item => (
+				<EmployeeLine picture = {item.picture}
+										name={item.name}
+										cell={item.cell}
+										email={item.email}
+										dob={item.dob}/>
 
-		))}
-		
-		</div>
+			))}
+			
+			</div>
 	}
 }
 
